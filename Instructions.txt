@@ -1,0 +1,32 @@
+# Helloworld
+1.Create index.html with "Hello world!" text
+
+2. Create Dockerfile with below contents. We can easily install and run the web server by just running the file.
+FROM nginx:alpine
+COPY index.html /usr/share/nginx/html/index.html
+
+I prefer NGINX because it has lot of features like open source reverse proxy, load balancer, http cache. It also has high performance and low memory usage.
+Alpine Linux is much smaller than most distribution base images and thus leads to much slimmer images in general.
+With this we are replacing the welcome page on the webserver with custom welcome page (“HELLO WORLD!”)
+
+3. Run below command to build the docker image based on given docker file. I want to name this build as tulasi:v1.
+docker build -t tulasi:v1 .
+
+4. Run below command to start Nginx listening to port 80
+docker run -d -p 80:80 tulasi:v1
+
+5. To make sure it is working we use curl to check the content.
+curl hostname
+"Hello world!" 
+
+6. We tag the docker image with the remote repository by using below command
+
+$ docker tag 621ae34ddd2a tulasi465/task:v1
+
+7. To publish this on https://hub.docker.com we push this to docker hub using this command 
+$ docker push tulasi465/task:v1
+The push refers to repository [docker.io/tulasi465/task]
+
+Now this is published on hub.docker.com and availble for pull from any server running docker by running docker pull tulasi465/task.
+Once this container is up on server it will return "Hello World" whenver a call is made at host.
+
